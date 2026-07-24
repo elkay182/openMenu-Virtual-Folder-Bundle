@@ -102,7 +102,7 @@ To accommodate the new openMenu, a modified version of [GD MENU Card Manager](ht
 
 ## Current Version
 
-The latest version of this unofficial fork is [1.6.1-elkay182.1](https://github.com/elkay182/openMenu-Virtual-Folder-Bundle/releases/tag/1.6.1-elkay182.1).
+The latest version of this unofficial fork is [1.6.0-elkay182.1](https://github.com/elkay182/openMenu-Virtual-Folder-Bundle/releases/tag/1.6.0-elkay182.1).
 
 ---
 
@@ -118,7 +118,7 @@ The latest version of this unofficial fork is [1.6.1-elkay182.1](https://github.
 ---
 
 ## Changelog
-- **Version 1.6.1-elkay182.1 (2026-07-24)**
+- **Version 1.6.0-elkay182.1 (2026-07-24)**
   - **GD MENU Card Manager**
     - Restored mouse and keyboard input in the macOS ARM64 AppBundle by requiring the current .NET SDK for Avalonia builds.
     - Archives and extracted folders containing both a legacy Redump GDI descriptor and a modern Redump CUE descriptor now select the supported CUE/BIN conversion path instead of rejecting the import.
