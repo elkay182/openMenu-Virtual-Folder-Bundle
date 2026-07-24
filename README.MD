@@ -1,5 +1,9 @@
 # openMenu Virtual Folder Bundle
 
+> **Unofficial elkay182 fork.** This fork is independently maintained and is not
+> endorsed by the upstream authors. Upstream project:
+> [DerekPascarella/openMenu-Virtual-Folder-Bundle](https://github.com/DerekPascarella/openMenu-Virtual-Folder-Bundle).
+
 <img align="right" width="300" src="https://github.com/DerekPascarella/openMenu-Virtual-Folder-Bundle/blob/main/images/preview.gif?raw=true">
 
 This is a new version of openMenu with virtual folder/subfolder support and other updates and fixes, including a modified version of GD MENU Card Manager to support it. It aims to be the ultimate menu software and SD card management solution for SEGA Dreamcast [GDEMU](https://gdemu.wordpress.com/about/) users.
@@ -98,7 +102,7 @@ To accommodate the new openMenu, a modified version of [GD MENU Card Manager](ht
 
 ## Current Version
 
-The latest version of **openMenu Virtual Folder Bundle** is [1.6.0-ateam](https://github.com/DerekPascarella/openMenu-Virtual-Folder-Bundle/releases/tag/1.6.0-ateam).
+The latest version of this unofficial fork is [1.6.0-elkay182.1](https://github.com/elkay182/openMenu-Virtual-Folder-Bundle/releases/tag/1.6.0-elkay182.1).
 
 ---
 
@@ -114,6 +118,11 @@ The latest version of **openMenu Virtual Folder Bundle** is [1.6.0-ateam](https:
 ---
 
 ## Changelog
+- **Version 1.6.0-elkay182.1 (2026-07-24)**
+  - **GD MENU Card Manager**
+    - Restored mouse and keyboard input in the macOS ARM64 AppBundle by requiring the current .NET SDK for Avalonia builds.
+    - Archives and extracted folders containing both a legacy Redump GDI descriptor and a modern Redump CUE descriptor now select the supported CUE/BIN conversion path instead of rejecting the import.
+    - Legacy Redump GDI images without a supported alternative descriptor remain rejected.
 - **Version 1.6.0-ateam (2026-07-23)**
   - **openMenu**
     - The settings menu is now scrollable in all view modes (see [Issue 168](https://github.com/DerekPascarella/openMenu-Virtual-Folder-Bundle/issues/168)).

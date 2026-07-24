@@ -55,6 +55,23 @@ namespace GDMENUCardManager.Core
                 }
             }
 
+            // Some Redump archives contain both the obsolete GDI descriptor and
+            // the modern CUE descriptor for the same track files. Prefer the CUE
+            // only when the otherwise-selected GDI is the unsupported legacy
+            // layout, allowing the existing CUE/BIN converter to handle it.
+            if (itemImageFile != null &&
+                Path.GetExtension(itemImageFile).Equals(".gdi", StringComparison.OrdinalIgnoreCase) &&
+                LegacyRedumpGdiDetector.IsLegacyRedumpGdi(itemImageFile))
+            {
+                var cueFile = files.FirstOrDefault(file =>
+                    Path.GetExtension(file).Equals(".cue", StringComparison.OrdinalIgnoreCase));
+
+                if (cueFile != null)
+                    itemImageFile = cueFile;
+                else
+                    throw new UnsupportedDiscFormatException(LegacyRedumpGdiDetector.ShortMessage);
+            }
+
             //is compressed?
             if (itemImageFile == null && files.Any(Helper.CompressedFileExpression))
             {
@@ -72,13 +89,22 @@ namespace GDMENUCardManager.Core
                     }
                 }
 
-                item.CanApplyGDIShrink = filesInsideArchive.Keys.Any(x => Path.GetExtension(x).Equals(".gdi", StringComparison.InvariantCultureIgnoreCase));
-
                 if (!string.IsNullOrEmpty(itemImageFile))
                 {
                     if (Path.GetExtension(itemImageFile).Equals(".gdi", StringComparison.OrdinalIgnoreCase) &&
                         await LegacyRedumpGdiDetector.IsLegacyRedumpGdiInArchiveAsync(compressedFile, filesInsideArchive))
-                        throw new UnsupportedDiscFormatException(LegacyRedumpGdiDetector.ShortMessage);
+                    {
+                        var cueFile = filesInsideArchive.Keys.FirstOrDefault(file =>
+                            Path.GetExtension(file).Equals(".cue", StringComparison.OrdinalIgnoreCase));
+
+                        if (cueFile != null)
+                            itemImageFile = cueFile;
+                        else
+                            throw new UnsupportedDiscFormatException(LegacyRedumpGdiDetector.ShortMessage);
+                    }
+
+                    item.CanApplyGDIShrink =
+                        Path.GetExtension(itemImageFile).Equals(".gdi", StringComparison.OrdinalIgnoreCase);
 
                     item.ImageFiles.Add(Path.GetFileName(compressedFile));
 
@@ -106,11 +132,6 @@ namespace GDMENUCardManager.Core
 
             if (itemImageFile == null)
                 throw new Exception("Cant't read data from file");
-
-            if (item.FileFormat == FileFormat.Uncompressed &&
-                Path.GetExtension(itemImageFile).Equals(".gdi", StringComparison.OrdinalIgnoreCase) &&
-                LegacyRedumpGdiDetector.IsLegacyRedumpGdi(itemImageFile))
-                throw new UnsupportedDiscFormatException(LegacyRedumpGdiDetector.ShortMessage);
 
             // Special handling for CUE/BIN format (only for uncompressed files)
             // Compressed CUE/BIN will be handled during extraction in Manager.cs
