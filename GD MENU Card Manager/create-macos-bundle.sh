@@ -63,6 +63,14 @@ else
     echo "Warning: Icon file not found at src/${APP_NAME}.AvaloniaUI/Assets/icon.icns"
 fi
 
+# Include the governing license and repository notices with binary releases.
+if [ -f "LICENSE" ]; then
+    cp "LICENSE" "${BUNDLE_PATH}/Contents/Resources/GDMENUCardManager-GPL-3.0.txt"
+fi
+if [ -f "../README.MD" ]; then
+    cp "../README.MD" "${BUNDLE_PATH}/Contents/Resources/README.MD"
+fi
+
 # Ad-hoc code signing (required for Apple Silicon arm64 binaries to execute)
 echo "Ad-hoc code signing the bundle..."
 if command -v rcodesign &> /dev/null; then
